@@ -14,11 +14,17 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   final phoneNumberTC = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  bool isPhoneValid = false;
+
+  @override
+  void dispose() {
+    phoneNumberTC.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 60.h),
@@ -52,14 +58,17 @@ class _SignInPageState extends State<SignInPage> {
                   return null;
                 },
                 onChanged: (phone) {
+                  setState(() {
+                    isPhoneValid = phone.number.length >= 10;
+                  });
                   phoneNumberTC.text = phone.completeNumber;
                 },
               ),
               SizedBox(height: 20.h),
               AppButton(
-                  allowSubmit: phoneNumberTC.text.isNotEmpty,
+                  allowSubmit: isPhoneValid,
                   onTap: () {
-                    if (phoneNumberTC.text.isNotEmpty) {
+                    if (formKey.currentState!.validate()) {
                       DialogUtils.showLoadingWithSuccess(
                         context: context,
                         successTitle: 'Successful submission!',
