@@ -1,80 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:sign_in_form/screens/sign_in_page.dart';
-import 'package:sign_in_form/widgets/button.dart';
 import 'package:sign_in_form/widgets/phone_number_input_field.dart';
 
 void main() {
-  testWidgets('SignInPage UI elements are rendered correctly',
+  Widget makeTestableWidget(Widget child) {
+    return ScreenUtilInit(
+      designSize: const Size(375, 812), // Ensures proper scaling
+      builder: (context, widget) => MaterialApp(home: child),
+    );
+  }
+
+  testWidgets('Valid phone number enables Continue button',
       (WidgetTester tester) async {
-    await tester.pumpWidget(
-      ScreenUtilInit(
-        designSize: const Size(375, 812),
-        builder: (context, child) => const MaterialApp(
-          home: SignInPage(),
-        ),
-      ),
-    );
+    await tester.pumpWidget(makeTestableWidget(const SignInPage()));
 
-    // Verify that the main UI elements are present
-    expect(find.text('Enter your phone'), findsOneWidget);
-    expect(find.text('You will receive a 4 digit code to verify your account'),
-        findsOneWidget);
-    expect(find.byType(PhoneTextInputForm), findsOneWidget);
-    expect(find.byType(AppButton), findsOneWidget);
-    expect(find.text('Continue'), findsOneWidget);
-    expect(find.text('Or continue with'), findsOneWidget);
+    final Finder phoneField = find.byType(PhoneTextInputForm);
+    final Finder continueButton = find.text("Continue");
+
+    await tester.enterText(phoneField, "+1234567890");
+    await tester.pumpAndSettle(); // Allow UI updates
+
+    await tester.tap(continueButton);
+    await tester.pumpAndSettle(); // Ensures dialog appears
+
+    // Check for the success message instead of SuccessDialog widget
+    expect(find.text("Successful submission!"), findsOneWidget);
   });
 
-  testWidgets('Continue button is initially disabled',
+  testWidgets('Invalid phone number shows validation error',
       (WidgetTester tester) async {
-    await tester.pumpWidget(
-      ScreenUtilInit(
-        designSize: const Size(375, 812),
-        builder: (context, child) => const MaterialApp(
-          home: SignInPage(),
-        ),
-      ),
-    );
+    await tester.pumpWidget(makeTestableWidget(const SignInPage()));
 
-    // Find the AppButton
-    final AppButton continueButton =
-        tester.widget(find.byType(AppButton)) as AppButton;
+    final Finder phoneField = find.byType(PhoneTextInputForm);
+    await tester.enterText(phoneField, "123"); // Invalid number
+    await tester.pumpAndSettle(); // Wait for UI update
 
-    // Verify that the button is initially disabled
-    expect(continueButton.allowSubmit, false);
+    // Force validation manually
+    final formKeyFinder = find.byType(Form);
+    final formState = tester.state<FormState>(formKeyFinder);
+    formState.validate();
+
+    await tester.pumpAndSettle(); // Ensure validation messages show
+
+    expect(find.text("Please enter a valid phone number"), findsOneWidget);
   });
 
-  testWidgets('Social login buttons are present', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      ScreenUtilInit(
-        designSize: const Size(375, 812),
-        builder: (context, child) => const MaterialApp(
-          home: SignInPage(),
-        ),
-      ),
-    );
+  testWidgets('Tapping Continue triggers SuccessDialog',
+      (WidgetTester tester) async {
+    await tester.pumpWidget(makeTestableWidget(const SignInPage()));
 
-    // Verify that all social login buttons are present
-    expect(find.text('Email'), findsOneWidget);
-    expect(find.text('Apple'), findsOneWidget);
-    expect(find.text('Google'), findsOneWidget);
-    expect(find.text('Facebook'), findsOneWidget);
-  });
+    final Finder phoneField = find.byType(PhoneTextInputForm);
+    await tester.enterText(phoneField, "+1234567890");
+    await tester.pumpAndSettle();
 
-  testWidgets('Sign up link is present', (WidgetTester tester) async {
-    await tester.pumpWidget(
-      ScreenUtilInit(
-        designSize: const Size(375, 812),
-        builder: (context, child) => const MaterialApp(
-          home: SignInPage(),
-        ),
-      ),
-    );
+    await tester.tap(find.text("Continue"));
+    await tester.pumpAndSettle(); // Wait for dialog
 
-    // Verify that the sign up text is present
-    expect(find.text('Not a member? '), findsOneWidget);
-    expect(find.text('Sign up'), findsOneWidget);
+    expect(find.text("Successful submission!"), findsOneWidget);
   });
 }

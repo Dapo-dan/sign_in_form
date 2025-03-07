@@ -26,7 +26,8 @@ class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
+        body: SingleChildScrollView(
+      child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 60.h),
         child: Form(
           key: formKey,
@@ -144,6 +145,6 @@ class _SignInPageState extends State<SignInPage> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

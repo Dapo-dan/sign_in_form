@@ -101,15 +101,6 @@ flutter test
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## Adding Your Demo
-
-To add your demo to this README:
-
-1. Record a screen capture of your app (preferably in GIF format)
-2. Create a `demo` folder in your project root
-3. Add the recording as `app_demo.gif`
-4. The demo will automatically appear in this README
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details
