@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
+import 'package:sign_in_form/constants/styles.dart';
 
 class PhoneTextInputForm extends StatefulWidget {
   const PhoneTextInputForm({
@@ -12,7 +13,6 @@ class PhoneTextInputForm extends StatefulWidget {
     this.onSaved,
     this.controller,
     this.hint,
-    this.label,
     this.keyboardType,
     this.textInputAction,
     this.inputFormatters,
@@ -25,7 +25,7 @@ class PhoneTextInputForm extends StatefulWidget {
   final onSaved;
   final validator;
   final TextEditingController? controller;
-  final String? hint, label;
+  final String? hint;
   final keyboardType, textInputAction;
   final List<TextInputFormatter>? inputFormatters;
   final Function()? onTap;
@@ -36,28 +36,6 @@ class PhoneTextInputForm extends StatefulWidget {
 }
 
 class _PhoneTextInputFormState extends State<PhoneTextInputForm> {
-  String? initialCountryCode;
-  String? initialPhoneNumber;
-
-  @override
-  void initState() {
-    super.initState();
-    _initializePhoneNumber();
-  }
-
-  void _initializePhoneNumber() {
-    if (widget.controller != null && widget.controller!.text.isNotEmpty) {
-      final phoneNumber = widget.controller!.text;
-      final parsedNumber =
-          PhoneNumber.fromCompleteNumber(completeNumber: phoneNumber);
-      initialCountryCode = parsedNumber.countryISOCode;
-      initialPhoneNumber = parsedNumber.number;
-    } else {
-      initialCountryCode = 'US'; // Default country code US
-      initialPhoneNumber = '';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -65,13 +43,6 @@ class _PhoneTextInputFormState extends State<PhoneTextInputForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget.label != null) ...[
-            Text(
-              widget.label!,
-              style: TextStyles.style16extrabold,
-            ),
-            verticalSpaceSmall(),
-          ],
           InkWell(
             onTap: widget.onTap,
             child: IntlPhoneField(
@@ -79,7 +50,7 @@ class _PhoneTextInputFormState extends State<PhoneTextInputForm> {
               inputFormatters: widget.inputFormatters,
               textInputAction: widget.textInputAction ?? TextInputAction.done,
               keyboardType: widget.keyboardType,
-              style: TextStyles.style14regular.copyWith(color: primaryColor),
+              style: TextStyles.style14regular.copyWith(color: Colors.black),
               validator: widget.validator,
               onSaved: (val) {
                 if (widget.controller != null) {
@@ -88,14 +59,14 @@ class _PhoneTextInputFormState extends State<PhoneTextInputForm> {
                 widget.onChanged?.call(val!);
               },
               onChanged: widget.onChanged,
-              initialCountryCode: initialCountryCode,
-              initialValue: initialPhoneNumber,
+              initialCountryCode: 'US',
+              initialValue: '',
               decoration: InputDecoration(
                 counterText: '',
                 filled: true,
-                fillColor: white,
+                fillColor: Color(0xFFf3eff7),
                 border: const OutlineInputBorder(
-                  borderSide: BorderSide(color: line),
+                  borderSide: BorderSide(color: Color(0xFFf3eff7)),
                   borderRadius: BorderRadius.all(
                     Radius.circular(
                       24,
@@ -103,7 +74,7 @@ class _PhoneTextInputFormState extends State<PhoneTextInputForm> {
                   ),
                 ),
                 enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: line),
+                  borderSide: BorderSide(color: Color(0xFFf3eff7)),
                   borderRadius: BorderRadius.all(
                     Radius.circular(
                       24,
@@ -111,7 +82,7 @@ class _PhoneTextInputFormState extends State<PhoneTextInputForm> {
                   ),
                 ),
                 focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: line),
+                  borderSide: BorderSide(color: Color(0xFFf3eff7)),
                   borderRadius: BorderRadius.all(
                     Radius.circular(
                       24,
@@ -119,7 +90,7 @@ class _PhoneTextInputFormState extends State<PhoneTextInputForm> {
                   ),
                 ),
                 errorBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: red),
+                  borderSide: BorderSide(color: Colors.red),
                   borderRadius: BorderRadius.all(
                     Radius.circular(
                       24,
@@ -127,7 +98,7 @@ class _PhoneTextInputFormState extends State<PhoneTextInputForm> {
                   ),
                 ),
                 focusedErrorBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: line),
+                  borderSide: BorderSide(color: Color(0xFFf3eff7)),
                   borderRadius: BorderRadius.all(
                     Radius.circular(
                       24,
@@ -135,7 +106,8 @@ class _PhoneTextInputFormState extends State<PhoneTextInputForm> {
                   ),
                 ),
                 hintText: widget.hint,
-                hintStyle: TextStyles.style12medium.copyWith(color: grey),
+                hintStyle:
+                    TextStyles.style12medium.copyWith(color: Color(0xFF4f4b55)),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
               ),
             ),
