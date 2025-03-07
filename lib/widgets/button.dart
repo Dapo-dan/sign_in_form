@@ -29,17 +29,18 @@ class AppButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
             color: buttonColor ?? Colors.black,
-            borderRadius: BorderRadius.circular(borderRadius ?? 24),
+            borderRadius: BorderRadius.circular(borderRadius ?? 10),
             border: Border.all(
               color: borderColor ?? Colors.black,
             )),
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: hPadding ?? 15.0,
-            vertical: vPadding ?? 13.0,
+            vertical: vPadding ?? 15.0,
           ),
           child: Center(
               child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 title,
@@ -47,6 +48,7 @@ class AppButton extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
+              const SizedBox(width: 10),
               Icon(
                 Icons.arrow_forward,
                 color: Colors.white,
@@ -79,46 +81,28 @@ class AppOutlinedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton.icon(
-      onPressed: allowSubmit ? onTap : null,
-      icon: icon,
-      label: Text(
-        title,
-        style: TextStyles.style16regular,
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        vertical: vPadding ?? 15.0,
       ),
-      style: OutlinedButton.styleFrom(
-        padding: EdgeInsets.symmetric(
-          vertical: vPadding ?? 16,
-          horizontal: hPadding ?? 24,
+      child: OutlinedButton.icon(
+        onPressed: allowSubmit ? onTap : null,
+        icon: icon,
+        label: Text(
+          title,
+          style: TextStyles.style17extrabold,
         ),
-        minimumSize: const Size(double.infinity, 48),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(borderRadius ?? 12),
+        style: OutlinedButton.styleFrom(
+          padding: EdgeInsets.symmetric(
+            vertical: vPadding ?? 16,
+            horizontal: hPadding ?? 24,
+          ),
+          minimumSize: const Size(double.infinity, 48),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius ?? 10),
+          ),
         ),
       ),
     );
   }
 }
-
-      //  OutlinedButton.icon(
-      //             onPressed: () {
-      //               controller.signInWithApple(isSignup: true);
-      //             },
-      //             icon: SvgPicture.asset(
-      //               IconPath.apple,
-      //             ),
-      //             label: Text(
-      //               'Sign up with Apple',
-      //               style: TextStyles.style16,
-      //             ),
-      //             style: OutlinedButton.styleFrom(
-      //               padding: const EdgeInsets.symmetric(
-      //                 vertical: 16,
-      //                 horizontal: 24,
-      //               ),
-      //               minimumSize: const Size(double.infinity, 48),
-      //               shape: RoundedRectangleBorder(
-      //                 borderRadius: BorderRadius.circular(12),
-      //               ),
-      //             ),
-      //           ),

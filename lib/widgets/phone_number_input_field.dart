@@ -17,7 +17,7 @@ class PhoneTextInputForm extends StatefulWidget {
     this.textInputAction,
     this.inputFormatters,
     this.onTap,
-    this.borderRadius = 24,
+    this.borderRadius = 10,
   });
 
   final Function(PhoneNumber)? onChanged;
@@ -61,31 +61,33 @@ class _PhoneTextInputFormState extends State<PhoneTextInputForm> {
               onChanged: widget.onChanged,
               initialCountryCode: 'US',
               initialValue: '',
+              showCountryFlag: false,
+              showDropdownIcon: false,
               decoration: InputDecoration(
                 counterText: '',
                 filled: true,
-                fillColor: Color(0xFFf3eff7),
+                fillColor: Color(0xFFebdffa),
                 border: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFf3eff7)),
+                  borderSide: BorderSide(color: Color(0xFFebdffa)),
                   borderRadius: BorderRadius.all(
                     Radius.circular(
-                      24,
+                      10,
                     ),
                   ),
                 ),
                 enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFf3eff7)),
+                  borderSide: BorderSide(color: Color(0xFFebdffa)),
                   borderRadius: BorderRadius.all(
                     Radius.circular(
-                      24,
+                      10,
                     ),
                   ),
                 ),
                 focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFf3eff7)),
+                  borderSide: BorderSide(color: Color(0xFFebdffa)),
                   borderRadius: BorderRadius.all(
                     Radius.circular(
-                      24,
+                      10,
                     ),
                   ),
                 ),
@@ -93,15 +95,15 @@ class _PhoneTextInputFormState extends State<PhoneTextInputForm> {
                   borderSide: BorderSide(color: Colors.red),
                   borderRadius: BorderRadius.all(
                     Radius.circular(
-                      24,
+                      10,
                     ),
                   ),
                 ),
                 focusedErrorBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFf3eff7)),
+                  borderSide: BorderSide(color: Color(0xFFebdffa)),
                   borderRadius: BorderRadius.all(
                     Radius.circular(
-                      24,
+                      10,
                     ),
                   ),
                 ),
