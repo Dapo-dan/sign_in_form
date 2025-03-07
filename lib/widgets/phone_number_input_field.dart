@@ -23,7 +23,7 @@ class PhoneTextInputForm extends StatefulWidget {
   final Function(PhoneNumber)? onChanged;
   final onSubmit;
   final onSaved;
-  final validator;
+  final String? Function(PhoneNumber?)? validator;
   final TextEditingController? controller;
   final String? hint;
   final keyboardType, textInputAction;
@@ -36,6 +36,8 @@ class PhoneTextInputForm extends StatefulWidget {
 }
 
 class _PhoneTextInputFormState extends State<PhoneTextInputForm> {
+  PhoneNumber? _phoneNumber;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -51,14 +53,27 @@ class _PhoneTextInputFormState extends State<PhoneTextInputForm> {
               textInputAction: widget.textInputAction ?? TextInputAction.done,
               keyboardType: widget.keyboardType,
               style: TextStyles.style14regular.copyWith(color: Colors.black),
-              validator: widget.validator,
-              onSaved: (val) {
-                if (widget.controller != null) {
-                  widget.controller!.text = val!.completeNumber;
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              validator: (phone) {
+                if (widget.validator != null) {
+                  return widget.validator!(_phoneNumber);
                 }
-                widget.onChanged?.call(val!);
+                return null;
               },
-              onChanged: widget.onChanged,
+              onSaved: (val) {
+                if (widget.controller != null && val != null) {
+                  widget.controller!.text = val.completeNumber;
+                }
+                if (val != null) {
+                  widget.onChanged?.call(val);
+                }
+              },
+              onChanged: (phone) {
+                setState(() {
+                  _phoneNumber = phone;
+                });
+                widget.onChanged?.call(phone);
+              },
               initialCountryCode: 'US',
               initialValue: '',
               showCountryFlag: false,
@@ -66,50 +81,40 @@ class _PhoneTextInputFormState extends State<PhoneTextInputForm> {
               decoration: InputDecoration(
                 counterText: '',
                 filled: true,
-                fillColor: Color(0xFFebdffa),
-                border: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFebdffa)),
+                fillColor: const Color(0xFFebdffa),
+                border: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Color(0xFFebdffa)),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      10,
-                    ),
+                    Radius.circular(widget.borderRadius),
                   ),
                 ),
-                enabledBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFebdffa)),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Color(0xFFebdffa)),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      10,
-                    ),
+                    Radius.circular(widget.borderRadius),
                   ),
                 ),
-                focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFebdffa)),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Color(0xFFebdffa)),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      10,
-                    ),
+                    Radius.circular(widget.borderRadius),
                   ),
                 ),
-                errorBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Colors.red),
+                errorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.red),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      10,
-                    ),
+                    Radius.circular(widget.borderRadius),
                   ),
                 ),
-                focusedErrorBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: Color(0xFFebdffa)),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Color(0xFFebdffa)),
                   borderRadius: BorderRadius.all(
-                    Radius.circular(
-                      10,
-                    ),
+                    Radius.circular(widget.borderRadius),
                   ),
                 ),
                 hintText: widget.hint,
-                hintStyle:
-                    TextStyles.style12medium.copyWith(color: Color(0xFF4f4b55)),
+                hintStyle: TextStyles.style12medium
+                    .copyWith(color: const Color(0xFF4f4b55)),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
               ),
             ),

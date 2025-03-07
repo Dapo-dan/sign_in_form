@@ -28,15 +28,17 @@ class AppButton extends StatelessWidget {
       onTap: allowSubmit ? onTap : null,
       child: Container(
         decoration: BoxDecoration(
-            color: buttonColor ?? Colors.black,
+            color: buttonColor ??
+                (allowSubmit ? Colors.black : Colors.grey.shade300),
             borderRadius: BorderRadius.circular(borderRadius ?? 10),
             border: Border.all(
-              color: borderColor ?? Colors.black,
+              color: borderColor ??
+                  (allowSubmit ? Colors.black : Colors.grey.shade300),
             )),
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: hPadding ?? 15.0,
-            vertical: vPadding ?? 15.0,
+            vertical: vPadding ?? 13.0,
           ),
           child: Center(
               child: Row(
@@ -44,7 +46,7 @@ class AppButton extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyles.style16regular.copyWith(
+                style: TextStyles.style16bold.copyWith(
                   color: Colors.white,
                 ),
               ),
