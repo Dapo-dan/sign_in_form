@@ -4,9 +4,11 @@ import 'package:sign_in_form/constants/const.dart';
 import 'package:sign_in_form/constants/styles.dart';
 import 'package:sign_in_form/screens/settings/widgets/settings_section_title.dart';
 import 'package:sign_in_form/screens/settings/widgets/settings_tile.dart';
+import 'package:sign_in_form/widgets/button.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({super.key});
+  final String email;
+  const SettingsPage({super.key, required this.email});
 
   @override
   State<SettingsPage> createState() => _SettingsPageState();
@@ -21,32 +23,36 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFf6f6f6),
-      // appBar: AppBar(
-      //   title: const Text('Settings'),
-      //   centerTitle: true,
-      //   backgroundColor: Colors.white,
-      //   elevation: 0,
-      //   foregroundColor: Colors.black,
-      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                "Settings",
-                style: TextStyles.style24extrabold.copyWith(fontSize: 26.sp),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Settings",
+                      style:
+                          TextStyles.style24extrabold.copyWith(fontSize: 26.sp),
+                    ),
+                    Text(
+                      "Lorem ipsum dolor sit amet consectetur.",
+                      style: TextStyles.style16regular.copyWith(
+                          color: Colors.grey, fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
               ),
-              Text(
-                "Lorem ipsum dolor sit amet consectetur.",
-                style: TextStyles.style16regular
-                    .copyWith(color: Colors.grey, fontWeight: FontWeight.w500),
-              ),
-              verticalSpaceMedium(),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 20.h),
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
                 width: double.infinity,
-                color: Colors.white,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.grey.shade300),
+                ),
                 child: Column(
                   children: [
                     CircleAvatar(
@@ -57,43 +63,53 @@ class _SettingsPageState extends State<SettingsPage> {
                     verticalSpaceSmall(),
                     Text(
                       "John Doe",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyles.style17extrabold,
                     ),
                     Text(
-                      "john.doe@mail.com",
-                      style: TextStyle(color: Colors.grey),
+                      widget.email,
+                      style: TextStyles.style17extrabold
+                          .copyWith(color: Colors.grey),
                     ),
                     verticalSpaceSmall(),
-                    ElevatedButton.icon(
-                      onPressed: () {},
-                      icon: const Icon(Icons.edit),
-                      label: const Text("Edit Profile"),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
+                    SizedBox(
+                      width: 165,
+                      child: AppIconButton(
+                        onTap: () {},
+                        title: "Edit Profile",
+                        borderRadius: 20,
+                        icon: const Icon(
+                          Icons.edit,
+                          color: Colors.white,
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-
-              const SizedBox(height: 30),
-
               // Preferences
               settingsSectionTitle("PREFERENCES"),
               settingsTile(
                 icon: Icons.language,
                 iconColor: Colors.orange,
                 title: "Language",
-                trailing: const Text("English"),
+                trailing: Text(
+                  "English",
+                  style:
+                      TextStyles.style17extrabold.copyWith(color: Colors.grey),
+                ),
               ),
               SwitchListTile(
+                tileColor: Colors.white,
                 secondary: Icon(Icons.dark_mode, color: Colors.blue),
-                title: const Text("Dark Mode"),
+                title: Text(
+                  "Dark Mode",
+                  style: TextStyles.style17extrabold,
+                ),
                 value: darkMode,
+                activeColor: Colors.white,
+                activeTrackColor: Colors.green,
+                inactiveThumbColor: Colors.white,
+                inactiveTrackColor: Colors.grey.shade300,
                 onChanged: (value) {
                   setState(() {
                     darkMode = value;
@@ -104,17 +120,26 @@ class _SettingsPageState extends State<SettingsPage> {
                 icon: Icons.location_on,
                 iconColor: Colors.green,
                 title: "Location",
-                trailing: const Text("Los Angeles, CA"),
+                trailing: Text(
+                  "Los Angeles, CA",
+                  style:
+                      TextStyles.style17extrabold.copyWith(color: Colors.grey),
+                ),
               ),
-
-              const SizedBox(height: 20),
-
               // Notifications
               settingsSectionTitle("NOTIFICATIONS"),
               SwitchListTile(
+                tileColor: Colors.white,
                 secondary: Icon(Icons.email, color: Colors.green),
-                title: const Text("Email Notifications"),
+                title: Text(
+                  "Email Notifications",
+                  style: TextStyles.style17extrabold,
+                ),
                 value: emailNotifications,
+                activeColor: Colors.white,
+                activeTrackColor: Colors.green,
+                inactiveThumbColor: Colors.white,
+                inactiveTrackColor: Colors.grey.shade300,
                 onChanged: (value) {
                   setState(() {
                     emailNotifications = value;
@@ -122,9 +147,17 @@ class _SettingsPageState extends State<SettingsPage> {
                 },
               ),
               SwitchListTile(
+                tileColor: Colors.white,
                 secondary: Icon(Icons.notifications, color: Colors.green),
-                title: const Text("Push Notifications"),
+                title: Text(
+                  "Push Notifications",
+                  style: TextStyles.style17extrabold,
+                ),
                 value: pushNotifications,
+                activeColor: Colors.white,
+                activeTrackColor: Colors.green,
+                inactiveThumbColor: Colors.white,
+                inactiveTrackColor: Colors.grey.shade300,
                 onChanged: (value) {
                   setState(() {
                     pushNotifications = value;
@@ -135,15 +168,22 @@ class _SettingsPageState extends State<SettingsPage> {
                 icon: Icons.music_note,
                 iconColor: Colors.red,
                 title: "Sound",
-                trailing: const Text("Default"),
+                trailing: Text(
+                  "Default",
+                  style:
+                      TextStyles.style17extrabold.copyWith(color: Colors.grey),
+                ),
               ),
 
-              const SizedBox(height: 30),
-              const Text(
-                "Made with ❤️ in Lagos",
-                style: TextStyle(color: Colors.grey),
+              verticalSpaceMedium(),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  "Made with ❤️ in Lagos",
+                  style: TextStyle(color: Colors.grey),
+                ),
               ),
-              const SizedBox(height: 30),
+              verticalSpaceMedium(),
             ],
           ),
         ),

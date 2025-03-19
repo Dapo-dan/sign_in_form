@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sign_in_form/screens/auth/sign_in_page.dart';
-import 'package:sign_in_form/screens/settings/settings.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,7 +17,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData.light(),
-          home: const SettingsPage(),
+          home: const SignInPage(),
         );
       },
     );

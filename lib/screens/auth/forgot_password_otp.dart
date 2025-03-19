@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sign_in_form/constants/styles.dart';
+import 'package:sign_in_form/screens/settings/settings.dart';
 import 'package:sign_in_form/utils/dialog_utils.dart';
 import 'package:sign_in_form/widgets/button.dart';
 import 'package:sign_in_form/widgets/text_input_field.dart';
@@ -66,6 +67,7 @@ class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
                   label: "Confirmation Code",
                   hint: '******',
                   obscure: true,
+                  maxLength: 6,
                   inputFormatters: [
                     FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                   ],
@@ -73,6 +75,7 @@ class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
                     setState(() {
                       isCodeComplete = val.isNotEmpty &&
                           val.length == 6 &&
+                          val.toString() == "123456" &&
                           !val.contains(' ');
                     });
                   },
@@ -81,11 +84,18 @@ class _ForgotPasswordOtpPageState extends State<ForgotPasswordOtpPage> {
                 AppButton2(
                   allowSubmit: isCodeComplete,
                   onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SettingsPage(
+                          email: widget.email,
+                        ),
+                      ),
+                    );
                     DialogUtils.showLoadingWithSuccess(
                       context: context,
-                      successTitle: 'Successful submission!',
-                      successMessage:
-                          "You're logged in, navigating to the next screen!",
+                      successTitle: 'Update successful!',
+                      successMessage: "You're logged in",
                       onContinue: () {
                         Navigator.of(context).pop();
                       },

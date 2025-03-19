@@ -55,7 +55,7 @@ class DialogUtils {
     // Show a SnackBar
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: const Text('OTP Sent'),
+        content: const Text('OTP is 123456'),
         duration: const Duration(seconds: 2),
       ),
     );

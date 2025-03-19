@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sign_in_form/constants/const.dart';
 import 'package:sign_in_form/constants/styles.dart';
 
 class AppButton extends StatelessWidget {
@@ -155,6 +156,67 @@ class AppOutlinedButton extends StatelessWidget {
           minimumSize: const Size(double.infinity, 48),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadius ?? 10),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class AppIconButton extends StatelessWidget {
+  const AppIconButton({
+    super.key,
+    required this.onTap,
+    required this.title,
+    required this.icon,
+    this.buttonColor,
+    this.borderColor,
+    this.textColor,
+    this.borderRadius,
+    this.hPadding,
+    this.vPadding,
+    this.allowSubmit = true,
+  });
+
+  final String title;
+  final void Function() onTap;
+  final Color? buttonColor, borderColor;
+  final Widget icon;
+  final Color? textColor;
+  final double? borderRadius, hPadding, vPadding;
+  final bool allowSubmit;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: allowSubmit ? onTap : null,
+      child: Container(
+        decoration: BoxDecoration(
+            color: buttonColor ??
+                (allowSubmit ? Color(0xFF235eec) : Colors.grey.shade300),
+            borderRadius: BorderRadius.circular(borderRadius ?? 30),
+            border: Border.all(
+              color: borderColor ??
+                  (allowSubmit ? Color(0xFF235eec) : Colors.grey.shade300),
+            )),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: hPadding ?? 15.0,
+            vertical: vPadding ?? 15.0,
+          ),
+          child: Center(
+            child: Row(
+              children: [
+                Text(
+                  title,
+                  style: TextStyles.style17extrabold.copyWith(
+                    color: textColor ?? Colors.white,
+                  ),
+                ),
+                horizontalSpaceSmall(),
+                icon,
+              ],
+            ),
           ),
         ),
       ),
