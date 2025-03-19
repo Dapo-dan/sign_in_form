@@ -106,7 +106,7 @@ class AppButton2 extends StatelessWidget {
             child: Text(
               title,
               style: TextStyles.style17extrabold.copyWith(
-                color: Colors.white,
+                color: textColor ?? Colors.white,
               ),
             ),
           ),

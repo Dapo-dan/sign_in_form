@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sign_in_form/screens/sign_in_page.dart';
+import 'package:sign_in_form/screens/auth/sign_in_page.dart';
 import 'package:sign_in_form/widgets/phone_number_input_field.dart';
 
 void main() {

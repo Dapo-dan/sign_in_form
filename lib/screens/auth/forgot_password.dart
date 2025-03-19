@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sign_in_form/constants/const.dart';
 import 'package:sign_in_form/constants/styles.dart';
-import 'package:sign_in_form/utils/dialog_utils.dart';
+import 'package:sign_in_form/screens/auth/forgot_password_otp.dart';
 import 'package:sign_in_form/widgets/button.dart';
 import 'package:sign_in_form/widgets/text_input_field.dart';
 
@@ -53,6 +53,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   TextInputForm(
                     label: "Email Address",
                     hint: 'john@example.com',
+                    controller: emailTC,
                     onChanged: (val) {
                       setState(() {
                         isEmailValid = val.isNotEmpty &&
@@ -77,20 +78,27 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     allowSubmit: isEmailValid,
                     onTap: () {
                       if (formKey.currentState!.validate()) {
-                        DialogUtils.showLoadingWithSuccess(
-                          context: context,
-                          successTitle: 'Successful submission!',
-                          successMessage:
-                              "You're logged in, navigating to the next screen!",
-                          onContinue: () {
-                            Navigator.of(context).pop();
-                          },
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ForgotPasswordOtpPage(email: emailTC.text),
+                          ),
                         );
+                        // DialogUtils.showLoadingWithSuccess(
+                        //   context: context,
+                        //   successTitle: 'Successful submission!',
+                        //   successMessage:
+                        //       "You're logged in, navigating to the next screen!",
+                        //   onContinue: () {
+                        //     Navigator.of(context).pop();
+                        //   },
+                        // );
                       }
                     },
                     title: "Next",
                   ),
-                  SizedBox(height: 200.h),
+                  SizedBox(height: 400.h),
                   Center(
                     child: RichText(
                       text: TextSpan(
@@ -101,8 +109,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                             text: "Sign in",
                             style: TextStyle(
                               fontSize: 14.sp,
-                              color: Colors.purple,
+                              color: Colors.black,
                               fontWeight: FontWeight.bold,
+                              decoration: TextDecoration.underline,
                             ),
                           ),
                         ],

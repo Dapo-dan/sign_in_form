@@ -37,4 +37,30 @@ class DialogUtils {
       );
     }
   }
+
+  static Future<void> showLoading({
+    required BuildContext context,
+    Duration loadingDuration = const Duration(seconds: 3),
+  }) async {
+    // Show loading overlay
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => const LoadingOverlay(),
+    );
+
+    // Wait for specified duration
+    await Future.delayed(loadingDuration);
+
+    // Show a SnackBar
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('OTP Sent'),
+        duration: const Duration(seconds: 2),
+      ),
+    );
+
+    // Hide loading overlay
+    Navigator.of(context).pop();
+  }
 }
