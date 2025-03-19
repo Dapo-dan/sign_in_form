@@ -63,6 +63,59 @@ class AppButton extends StatelessWidget {
   }
 }
 
+class AppButton2 extends StatelessWidget {
+  const AppButton2({
+    super.key,
+    required this.onTap,
+    required this.title,
+    this.buttonColor,
+    this.borderColor,
+    this.textColor,
+    this.borderRadius,
+    this.hPadding,
+    this.vPadding,
+    this.allowSubmit = true,
+  });
+
+  final String title;
+  final void Function() onTap;
+  final Color? buttonColor, borderColor;
+  final Color? textColor;
+  final double? borderRadius, hPadding, vPadding;
+  final bool allowSubmit;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: allowSubmit ? onTap : null,
+      child: Container(
+        decoration: BoxDecoration(
+            color: buttonColor ??
+                (allowSubmit ? Color(0xFF235eec) : Colors.grey.shade300),
+            borderRadius: BorderRadius.circular(borderRadius ?? 30),
+            border: Border.all(
+              color: borderColor ??
+                  (allowSubmit ? Color(0xFF235eec) : Colors.grey.shade300),
+            )),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: hPadding ?? 15.0,
+            vertical: vPadding ?? 15.0,
+          ),
+          child: Center(
+            child: Text(
+              title,
+              style: TextStyles.style17extrabold.copyWith(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class AppOutlinedButton extends StatelessWidget {
   const AppOutlinedButton({
     super.key,

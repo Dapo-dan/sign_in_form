@@ -1,6 +1,8 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:sign_in_form/constants/styles.dart';
+import 'package:sign_in_form/screens/forgot_password.dart';
 import 'package:sign_in_form/utils/dialog_utils.dart';
 import 'package:sign_in_form/widgets/button.dart';
 import 'package:sign_in_form/widgets/phone_number_input_field.dart';
@@ -136,6 +138,15 @@ class _SignInPageState extends State<SignInPage> {
                           color: Colors.purple,
                           fontWeight: FontWeight.bold,
                         ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      const ForgotPasswordPage()),
+                            );
+                          },
                       ),
                     ],
                   ),
